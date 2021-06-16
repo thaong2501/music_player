@@ -23,25 +23,26 @@ const progress = $('#progress');
 const prevBtn = $(".btn-prev");
 const nextBtn = $(".btn-next");
 const randomBtn = $('.btn-random');
+const repeatBtn = $('.btn-repeat');
 
 const app = {
     currentIndex: 0, //the first song
     isPlaying: false,
     isRandom: false,
+    isRepeat: false,
     songs: [
-    {
-        name: "Let's fall in love for the night",
-        singer: "FINNEAS",
-        path: './music/Lets-Fall-In-Love-For-The-Night.mp3',
-        image: './images/FINNEAS.jpg'
-    },
-      {
-        name: "Mean it",
-        singer: "Lauv",
-        path: './music/mean-it.mp3',
-        image: './images/lauv.jpg'
-      },
-      
+        {
+            name: "Mean it",
+            singer: "Lauv",
+            path: './music/mean-it.mp3',
+            image: './images/lauv.jpg'
+          },
+        {
+            name: "Let's fall in love for the night",
+            singer: "FINNEAS",
+            path: './music/Lets-Fall-In-Love-For-The-Night.mp3',
+            image: './images/FINNEAS.jpg'
+        },
       {
         name: "Older",
         singer: "Sasha Sloan",
@@ -192,6 +193,23 @@ const app = {
                 randomBtn.classList.toggle('active', _this.isRandom);
                 
             }
+
+            // Xử lý phát tiếp khi hết bài
+            audio.onended = function(){
+                if(_this.isRepeat){
+                    audio.play();
+                }else{
+                    nextBtn.click();
+                }
+                
+            }
+
+            // Lặp lại bài hát
+            repeatBtn.onclick = function(){
+                _this.isRepeat = !_this.isRepeat;
+                repeatBtn.classList.toggle('active', _this.isRepeat);
+            }
+
 
         }
         
